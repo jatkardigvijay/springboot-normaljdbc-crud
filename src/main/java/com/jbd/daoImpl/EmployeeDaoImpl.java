@@ -8,15 +8,21 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.jbd.dao.EmployeeDao;
 import com.jbd.entity.Employee;
+import com.jbd.exception.JbdException;
 import com.jbd.utils.Queries;
 
 @Repository
 public class EmployeeDaoImpl implements EmployeeDao {
+
+	private static final Logger logger = LoggerFactory.getLogger(EmployeeDaoImpl.class.getName());
 
 	@Autowired
 	private DataSource dataSource;
@@ -31,17 +37,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			ps = connection.prepareStatement(Queries.GET_ALL_EMPLOYEES);
 
+			logger.info("Executing query : " + Queries.GET_ALL_EMPLOYEES);
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
-				Employee emp = new Employee(rs.getInt("empId"), rs.getString("empName"), rs.getInt("epAge"));
+				Employee emp = new Employee(rs.getInt("employee_Id"), rs.getString("employee_Name"),
+						rs.getInt("employee_Age"));
 
 				employeeList.add(emp);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new JbdException("Error executing stored procedure", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return employeeList;
@@ -81,9 +90,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			ps = connection.prepareStatement(Queries.INSERT_EMPLOYEE);
 
-			ps.setInt(1, employee.getEmpId());
-			ps.setString(2, employee.getEmpName());
-			ps.setInt(3, employee.getEpAge());
+			ps.setInt(1, employee.getEmployeeId());
+			ps.setString(2, employee.getEmployeeName());
+			ps.setInt(3, employee.getEmployeeAge());
 
 			int rs = ps.executeUpdate();
 
@@ -109,9 +118,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			if (employee != null) {
 
-				int empId = employee.getEmpId();
-				ps.setString(1, employee.getEmpName());
-				ps.setInt(2, employee.getEpAge());
+				int empId = employee.getEmployeeId();
+				ps.setString(1, employee.getEmployeeName());
+				ps.setInt(2, employee.getEmployeeAge());
 				ps.setInt(3, empId);
 
 				int rs = ps.executeUpdate();
