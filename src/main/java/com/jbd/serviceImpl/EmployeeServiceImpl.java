@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jbd.controller.EmployeeController;
 import com.jbd.dao.EmployeeDao;
 import com.jbd.entity.Employee;
 import com.jbd.service.EmployeeService;
@@ -45,6 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		Employee updatedEmployee = empDao.updateEmployee(employee);
 		return updatedEmployee;
+	}
+
+	@Override
+	public Employee getEmployeeById(int id) {
+
+		return empDao.getEmployeeById(id);
 	}
 
 }

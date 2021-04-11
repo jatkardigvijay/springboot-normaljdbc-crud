@@ -40,6 +40,7 @@ public class EmployeeController {
 		List<Employee> employeeList = employeeService.getAllEmployees();
 
 		if (employeeList == null || employeeList.isEmpty()) {
+			logger.info("No data found or list is empty");
 			throw new JbdException("No data found", HttpStatus.OK, employeeList);
 		} else {
 			logger.info("Received employee list with size : " + employeeList.size());
@@ -48,9 +49,24 @@ public class EmployeeController {
 
 	}
 
+	@GetMapping("/api/v1/{id}")
+	public ResponseEntity<Response> getEmployeeById(@PathVariable("id") int id) throws JbdException {
+
+		Employee employee = employeeService.getEmployeeById(id);
+
+		if (employee == null) {
+			logger.info("Employee with id = " + id + " no found");
+			throw new JbdException("No data found", HttpStatus.OK, employee);
+		} else {
+			logger.info("Received employee with id = " + id);
+			return new ResponseEntity<Response>(new Response("success", employee, null), HttpStatus.OK);
+		}
+	}
+
 	@DeleteMapping("/api/v1/{id}")
 	public boolean deleteEmployee(@PathVariable("id") int id) {
 
+		logger.info("deleted Employee with id = " + id);
 		return employeeService.deleteEmployee(id);
 	}
 
