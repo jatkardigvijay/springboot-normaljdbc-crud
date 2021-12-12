@@ -1,15 +1,19 @@
 package com.jbd.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Employee {
 
-	private int employeeId;
-	private String employeeName;
-	private int employeeAge;
+    int employeeId;
+    String employeeName;
+    int employeeAge;
 }

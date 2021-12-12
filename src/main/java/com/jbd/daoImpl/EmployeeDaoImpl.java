@@ -149,13 +149,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			ps = connection.prepareStatement(Queries.GET_EMPLOYEE);
 
-			ps.setInt(1, id);
+			ps.setObject(1,id);
 
 			logger.info("executing query = " + Queries.GET_EMPLOYEE);
 
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next() == true) {
+			if (rs.next()) {
 
 				employee = new Employee(rs.getInt("employee_Id"), rs.getString("employee_Name"),
 						rs.getInt("employee_Age"));
