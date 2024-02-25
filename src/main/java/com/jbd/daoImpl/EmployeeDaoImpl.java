@@ -42,7 +42,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			while (rs.next()) {
 
-				Employee emp = new Employee(rs.getInt("employee_Id"), rs.getString("employee_Name"),
+				Employee emp = new Employee(rs.getInt("employee_id"), rs.getString("employee_Name"),
 						rs.getInt("employee_Age"));
 
 				employeeList.add(emp);
