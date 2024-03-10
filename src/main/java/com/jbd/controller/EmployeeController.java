@@ -31,10 +31,14 @@ public class EmployeeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class.getName());
 
-	@Autowired
-	private EmployeeService employeeService;
+	private final EmployeeService employeeService;
 
-	@GetMapping("/api/v1")
+	@Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping("/api/v1")
 	public ResponseEntity<Response> getAllEmployees() throws Exception {
 
 		List<Employee> employeeList = employeeService.getAllEmployees();
