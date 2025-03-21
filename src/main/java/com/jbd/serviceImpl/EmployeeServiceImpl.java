@@ -2,12 +2,11 @@ package com.jbd.serviceImpl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jbd.dao.EmployeeDao;
 import com.jbd.entity.Employee;
@@ -37,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public boolean insertEmployee(Employee employee) {
 
 		return empDao.insertEmployee(employee);
-		//call the third party gateway for payment
+		// call the third party gateway for payment
 	}
 
 	@Override
