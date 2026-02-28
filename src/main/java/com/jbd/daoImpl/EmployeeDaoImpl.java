@@ -90,16 +90,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			ps = connection.prepareStatement(Queries.INSERT_EMPLOYEE);
 
-			ps.setInt(1, employee.getEmployeeId());
-			ps.setString(2, employee.getEmployeeName());
-			ps.setInt(3, employee.getEmployeeAge());
+			ps.setString(1, employee.getEmployeeName());
+			ps.setInt(2, employee.getEmployeeAge());
 
 			int rs = ps.executeUpdate();
 
-			if (rs == 1) {
-
-				return true;
-			}
+			return rs > 0;  
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -157,8 +153,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 			if (rs.next()) {
 
-				employee = new Employee(rs.getInt("employee_Id"), rs.getString("employee_Name"),
-						rs.getInt("employee_Age"));
+				employee = new Employee(rs.getInt("employeeId"), rs.getString("employeeName"),
+						rs.getInt("employeeAge"));
 
 				return employee;
 			}
