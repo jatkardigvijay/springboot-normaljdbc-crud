@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Employee {
 
-    int employeeId;
+    Integer employeeId;
     String employeeName;
-    int employeeAge;
+    Integer employeeAge;
 }
